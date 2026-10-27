@@ -1,0 +1,58 @@
+# XOR Brute Force
+
+A small Python tool that decodes data hidden with a single-byte XOR key, by trying every possible key (0 to 255).
+
+This is a beginner learning project. It practices the same basic idea malware analysts use to find simple XOR-obfuscated strings.
+
+## How it works
+
+XOR has a useful property: applying it twice with the same key gives back the original value. So if data was XOR-ed with one unknown key, we can try all 256 keys and look for a readable result.
+
+1. Read the encoded numbers from `data.txt` (one number per line).
+2. For each key from 0 to 255, XOR every number with the key and build a string.
+3. Print the result if it is printable ASCII.
+
+## Files
+
+| File | What it is |
+| --- | --- |
+| `main.py` | Reads `data.txt` and tries every key |
+| `data.txt` | The encoded data, one number per line |
+
+## How to run
+
+You need Python 3 installed.
+
+```bash
+python3 main.py
+```
+
+## Example
+
+For the data in `data.txt` the output includes these lines:
+
+```
+10 MALWARE
+42 malware
+```
+
+Key `42` gives lowercase text and key `10` gives uppercase text, because `42 ^ 10 = 32`, and XOR with 32 flips a letter between lower and upper case.
+
+## What I practiced
+
+- Reading files with `open()` and `with`
+- `for` loops and nested loops
+- `ord()`, `chr()` and the XOR operator `^`
+- Filtering results with `isprintable()` and `isascii()`
+
+## Notes
+
+- This only works for single-byte keys. Real malware often uses longer keys or other encodings.
+- Many keys produce printable text, so a human (or a smarter check) still has to pick the real answer.
+
+## Ideas for improvement
+
+- Only print results that contain a known word
+- Read raw bytes with `"rb"` instead of numbers in a text file
+- Score results by how English-like they look
+- Accept the file name as a command-line argument
